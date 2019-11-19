@@ -1,21 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libftprintf.h                                      :+:      :+:    :+:   */
+/*   putchar.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/15 22:40:32 by badam             #+#    #+#             */
-/*   Updated: 2019/11/19 02:16:01 by badam            ###   ########.fr       */
+/*   Created: 2019/11/17 06:21:49 by badam             #+#    #+#             */
+/*   Updated: 2019/11/19 01:25:08 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#include <unistd.h>
 
-int	ft_printf(const char *format, ...);
-int	ft_putchar(char c);
-int	ft_print_int(int n);
-int	ft_print_uint(unsigned int n);
-
-#endif
+int	ft_putchar(char c)
+{
+	return (write(1, &c, 1) < 0 ? 0 : 1);
+}

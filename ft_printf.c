@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2019/11/17 06:25:55 by badam            ###   ########.fr       */
+/*   Updated: 2019/11/19 06:36:12 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 #include <unistd.h>
 #include "libftprintf.h"
 
-static int	ft_printf_convert(char c, va_list *ap)
+static int	ft_printf_convert(char c, char *str, va_list *ap)
 {
-	return ((c == 'd' || c == 'i') ?	print_int(va_arg(*ap, int)) :
-			(c == 'u') ?				print_uint(va_arg(*ap, unsigned int)) :
+	return ((c == 'i') ? ft_print_int(va_arg(*ap, int)) :
+			(c == 'u') ? ft_print_uint(va_arg(*ap, unsigned int)) :
+			(c == 'l') ? ft_flag_long(*ap, *(str + 1)) :
 			0);
 }
 
@@ -26,7 +27,7 @@ int			ft_printf(const char *format, ...)
 	va_list	ap;
 	char	*formatcpy;
 	int		printed_char;
-	int		convert_printed_char;
+	int		cnvt_printed_char;
 
 	if (!format)
 		return (-1);
@@ -37,15 +38,15 @@ int			ft_printf(const char *format, ...)
 	{
 		if (*formatcpy == '%' && ++formatcpy)
 		{
-			convert_printed_char = ft_printf_convert(*(format++), &ap);
-			if (convert_printed_char < 0)
+			cnvt_printed_char = ft_printf_convert(*(formatcpy), formatcpy, &ap);
+			if (cnvt_printed_char < 0)
 				return (-1);
 			else
-				printed_char += convert_printed_char;
+				printed_char += cnvt_printed_char;
 		}
 		else
 		{
-			if (++printed_char && write(1, format, 1) < 0)
+			if (++printed_char && write(1, formatcpy, 1) < 0)
 				return (-1);
 		}
 		formatcpy++;
