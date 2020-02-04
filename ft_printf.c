@@ -6,15 +6,21 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2019/11/19 06:36:12 by badam            ###   ########.fr       */
+/*   Updated: 2020/02/04 20:26:48 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
 #include <unistd.h>
+#include "libft/libft.h"
 #include "libftprintf.h"
 
-static int	ft_printf_convert(char c, char *str, va_list *ap)
+static int	add_string(char str, size_t size)
+{
+	
+}
+
+static int	add_convert(char c, char *str, va_list *ap)
 {
 	return ((c == 'i') ? ft_print_int(va_arg(*ap, int)) :
 			(c == 'u') ? ft_print_uint(va_arg(*ap, unsigned int)) :
@@ -26,31 +32,30 @@ int			ft_printf(const char *format, ...)
 {
 	va_list	ap;
 	char	*formatcpy;
-	int		printed_char;
-	int		cnvt_printed_char;
+	size_t	print_len;
+	size_t	format_len;
 
 	if (!format)
 		return (-1);
 	formatcpy = (char*)format;
-	printed_char = 0;
+	print_len = 0;
 	va_start(ap, format);
 	while (*formatcpy)
 	{
 		if (*formatcpy == '%' && ++formatcpy)
 		{
-			cnvt_printed_char = ft_printf_convert(*(formatcpy), formatcpy, &ap);
-			if (cnvt_printed_char < 0)
-				return (-1);
-			else
-				printed_char += cnvt_printed_char;
+			formatcpy += add_convert(*(formatcpy), formatcpy, &ap);
+			print_len += ft_strlen();
 		}
 		else
 		{
-			if (++printed_char && write(1, formatcpy, 1) < 0)
-				return (-1);
+			format_len = ...;
+			add_string(formatcpy, format_len);
+			formatcpy += format_len;
+			print_len += format_len;
 		}
-		formatcpy++;
 	}
 	va_end(ap);
+	print_all();
 	return (printed_char);
 }
