@@ -4,7 +4,7 @@ ARFLAGS=rcs
 NAME=libftprintf.a
 DEPS=libft/libft.a
 HEADERS=libftprintf.h
-SRC=ft_printf.c print_int.c print_uint.c
+SRC=ft_printf.c ft_printf_utils.c
 OBJ=$(SRC:.c=.o)
 SRC_BONUS=
 OBJ_BONUS=$(SRC_BONUS:.c=.o)
@@ -15,7 +15,7 @@ $(NAME): $(DEPS) $(OBJ) $(HEADERS)
 	ar $(ARFLAGS) $(NAME) $(OBJ)
 
 libft/libft.a:
-	cd libft && make
+	make -C libft
 
 bonus: $(DEPS) $(OBJ) $(OBJ_BONUS) $(HEADERS)
 	ar $(ARFLAGS) $(NAME) $(OBJ) $(OBJ_BONUS)
@@ -24,11 +24,11 @@ bonus: $(DEPS) $(OBJ) $(OBJ_BONUS) $(HEADERS)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -rf *.o
-	cd libft && make clean
+	rm -rf $(OBJ)
+	make -C libft clean
 
 fclean:	clean	
 	rm -rf $(NAME)
-	cd libft && make fclean
+	make -C libft fclean
 
 re: fclean all
