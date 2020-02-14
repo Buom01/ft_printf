@@ -6,14 +6,11 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 01:52:16 by badam             #+#    #+#             */
-/*   Updated: 2020/02/14 00:49:53 by badam            ###   ########.fr       */
+/*   Updated: 2020/02/14 05:39:56 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdio.h>
+#include "libftprintf.h"
 #include "libft/libft.h"
 
 int		freeup(t_list **print_sgmt, va_list *ap)
@@ -31,7 +28,7 @@ void	print(void *s)
 		return ;
 	len = ft_strlen((char*)s);
 	if (len)
-		write ((int)stdout, (const void*)s, len);
+		write (1, (const void*)s, len);
 }
 
 char	is_converter(char c)

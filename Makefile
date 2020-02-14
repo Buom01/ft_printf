@@ -12,10 +12,10 @@ OBJ_BONUS=$(SRC_BONUS:.c=.o)
 all: $(NAME) 
 
 $(NAME): $(DEPS) $(OBJ) $(HEADERS)
-	ar $(ARFLAGS) $(NAME) $(OBJ)
+	ar $(ARFLAGS) $(NAME) $(OBJ) ${DEPS}
 
 libft/libft.a:
-	make -C libft
+	make -C libft bonus
 
 bonus: $(DEPS) $(OBJ) $(OBJ_BONUS) $(HEADERS)
 	ar $(ARFLAGS) $(NAME) $(OBJ) $(OBJ_BONUS)
@@ -25,7 +25,6 @@ bonus: $(DEPS) $(OBJ) $(OBJ_BONUS) $(HEADERS)
 
 clean:
 	rm -rf $(OBJ)
-	make -C libft clean
 
 fclean:	clean	
 	rm -rf $(NAME)

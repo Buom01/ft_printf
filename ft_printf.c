@@ -6,14 +6,12 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2020/02/14 00:43:35 by badam            ###   ########.fr       */
+/*   Updated: 2020/02/14 05:35:14 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdarg.h>
-#include <stdlib.h>
-#include "libft/libft.h"
 #include "libftprintf.h"
+#include "libft/libft.h"
 
 static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
 {
@@ -26,9 +24,10 @@ static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
 	strcpy = *str;
 	while (*strcpy && *strcpy != '%' && strcpy++)
 		size++;
-	if (!(content = malloc(size * sizeof(char))))
+	if (!(content = malloc((size + 1) * sizeof(char))))
 		return (0);
-	ft_memcpy(&content, str, size);
+	ft_memcpy(content, *str, size);
+	content[size] = '\0';
 	if (!(sgmt = ft_lstnew(content)))
 	{
 		free(content);
