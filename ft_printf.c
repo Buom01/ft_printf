@@ -6,12 +6,11 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2020/02/14 05:35:14 by badam            ###   ########.fr       */
+/*   Updated: 2020/02/20 06:21:03 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include "libft/libft.h"
 
 static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
 {
@@ -26,7 +25,7 @@ static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
 		size++;
 	if (!(content = malloc((size + 1) * sizeof(char))))
 		return (0);
-	ft_memcpy(content, *str, size);
+	ft_memcpy((void*)content, (void*)*str, size);
 	content[size] = '\0';
 	if (!(sgmt = ft_lstnew(content)))
 	{
@@ -36,15 +35,28 @@ static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
 	ft_lstadd_back(print_sgmt, sgmt);
 	*str += size;
 	*print_len += size;
-	return (size);
+	return (1);
 }
 
-static int	add_convert(char *str, va_list *ap, t_list **print_sgmt)
+static int	add_convert(char *str, va_list *ap, size_t *ai, t_list **print_sgmt)
 {
-	(void)str;
-	(void)ap;
-	(void)print_sgmt;
-	return (0);
+	char	*content;
+	t_list	*sgmt;
+	t_flags	flags;
+
+	init_flags(flags);
+	while (*str && parse_flag(&flags, str, *str))
+		str++;
+	if (!(content = convert(&flags, ap, ai)))
+		return (0);
+	if (!(sgmt = ft_lstnew(content)))
+	{
+		free(content);
+		return (0);
+	}
+	ft_lstadd_back(print_sgmt, sgmt);
+	print_len += ft_strlen(content);
+	return (1);
 	/*
 	t_conv	convertion;
 	char	*strcpy;
@@ -66,6 +78,7 @@ static int	add_convert(char *str, va_list *ap, t_list **print_sgmt)
 int			ft_printf(const char *format, ...)
 {
 	va_list	ap;
+	size_t	ai;
 	char	*formatcpy;
 	size_t	print_len;
 	t_list	*print_sgmt;
@@ -73,16 +86,14 @@ int			ft_printf(const char *format, ...)
 	if (!format)
 		return (-1);
 	formatcpy = (char*)format;
-	print_len = 0;
-	print_sgmt = NULL;
+	print_len = print_sgmt = ai = 0;
 	va_start(ap, format);
 	while (*formatcpy)
 	{
 		if (*formatcpy == '%' && ++formatcpy)
 		{
-			if (!(formatcpy += add_convert(formatcpy, &ap, &print_sgmt)))
+			if (!add_convert(formatcpy, &ap, &ai, &print_sgmt))
 				return freeup(&print_sgmt, &ap);
-			print_len += ft_strlen(ft_lstlast(print_sgmt)->content);
 		}
 		else
 			if (!add_string(&formatcpy, &print_sgmt, &print_len))

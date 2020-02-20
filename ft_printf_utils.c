@@ -6,12 +6,11 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 01:52:16 by badam             #+#    #+#             */
-/*   Updated: 2020/02/14 05:39:56 by badam            ###   ########.fr       */
+/*   Updated: 2020/02/20 06:02:25 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include "libft/libft.h"
 
 int		freeup(t_list **print_sgmt, va_list *ap)
 {
@@ -33,10 +32,22 @@ void	print(void *s)
 
 char	is_converter(char c)
 {
-	return (c == 'i' || c == 'u');
+	int	i;
+
+	i = 0;
+	while (CONVERTERS[i])
+		if (CONVERTERS[i++] == c)
+			return (--i);
+	return (0);
 }
 
 char	is_flag(char c)
 {
-	return (c == 'l' || c == 'l');
+	int	i;
+
+	i = 0;
+	while (FLAGS[i])
+		if (FLAGS[i++] == c)
+			return (--i);
+	return (0);
 }

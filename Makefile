@@ -4,7 +4,7 @@ ARFLAGS=rcs
 NAME=libftprintf.a
 DEPS=libft/libft.a
 HEADERS=libftprintf.h
-SRC=ft_printf.c ft_printf_utils.c
+SRC=ft_printf.c ft_printf_utils.c ft_printf_parsing.c
 OBJ=$(SRC:.c=.o)
 SRC_BONUS=
 OBJ_BONUS=$(SRC_BONUS:.c=.o)

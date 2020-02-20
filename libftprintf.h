@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:40:32 by badam             #+#    #+#             */
-/*   Updated: 2020/02/14 05:40:28 by badam            ###   ########.fr       */
+/*   Updated: 2020/02/20 06:22:52 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,21 @@
 # include <unistd.h>
 # include "libft/libft.h"
 
-# define MAX_FLAG 16
+# define CONVERTERS "cspdiuxX%"
+# define FLAGS "-0.*"
 
-typedef struct	s_conv
+enum {
+	FALSE = 0,
+	TRUE = 1
+}				e_bool;
+
+typedef struct	s_flags
 {
-	char	type;
-	char	flag[MAX_FLAG];
-}				t_conv;
+	char	conv;
+	e_bool	zero_pad;
+	e_bool	left;
+	size_t	precision;
+}				t_flags;
 
 int				ft_printf(const char *format, ...);
 int				ft_print_int(int n);
@@ -32,5 +40,11 @@ int				ft_print_uint(unsigned int n);
 
 int				freeup(t_list **print_sgmt, va_list *ap);
 void			print(void *s);
+char			is_converter(char c);
+char			is_flag(char c);
+
+void			init_flags(t_flags *flags);
+char			parse_flag(t_flags flags, char c);
+char			*convert(t_flags flags, va_list *ap, size_t *ai);
 
 #endif
