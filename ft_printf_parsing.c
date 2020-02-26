@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/02/26 22:33:27 by badam            ###   ########.fr       */
+/*   Updated: 2020/02/26 22:41:03 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ static int	parse_precision(char **str, va_list *ap)
 
 char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 {
-	int	flag_index;
-
 	if (!(flags->conv))
 		return (flags->conv = c);
 	if (flags->conv == '%')
@@ -63,7 +61,7 @@ char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 		flags->precision = parse_precision(str, ap);
 
 	return (1);
-	// if it's a converter, should I replace flags->conv ?
+	// if it's a converter, should I replace flags->conv ? Aka should I use the last conv ?
 }
 
 char		*convert(t_flags flags, va_list *ap)
