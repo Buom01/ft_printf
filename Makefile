@@ -1,6 +1,6 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror
-ARFLAGS=rcs
+ARFLAGS=rcsT
 NAME=libftprintf.a
 DEPS=libft/libft.a
 HEADERS=libftprintf.h
@@ -19,7 +19,7 @@ libft/libft.a:
 	make -C libft bonus
 
 bonus: $(DEPS) $(OBJ) $(OBJ_BONUS) $(HEADERS)
-	ar $(ARFLAGS) $(NAME) $(OBJ) $(OBJ_BONUS)
+	ar $(ARFLAGS) $(NAME) $(OBJ) $(OBJ_BONUS) ${DEPS}
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
