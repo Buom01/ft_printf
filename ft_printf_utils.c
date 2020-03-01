@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 01:52:16 by badam             #+#    #+#             */
-/*   Updated: 2020/02/20 06:02:25 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/01 02:43:00 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	is_converter(char c)
 	i = 0;
 	while (CONVERTERS[i])
 		if (CONVERTERS[i++] == c)
-			return (--i);
+			return (1);
 	return (0);
 }
 

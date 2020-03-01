@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/02/26 22:41:03 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/01 03:29:05 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static int	parse_precision(char **str, va_list *ap)
 			n += **str - '0';
 			(*str)++;
 		}
+		(*str)--;
 		return (n);
 	}
 	else
@@ -47,12 +48,13 @@ static int	parse_precision(char **str, va_list *ap)
 
 char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 {
-	if (!(flags->conv))
+	// if it's a converter, should I replace flags->conv ? Aka should I use the last conv ?
+	if (is_converter(c))
 		return (flags->conv = c);
 	if (flags->conv == '%')
 		return (0);
 	if (!is_flag(c))
-		return (0);
+		return (is_converter(c));
 	if (c == '-')
 		flags->left = !(flags->zero_pad = false);
 	else if (c == '0')
@@ -61,29 +63,29 @@ char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 		flags->precision = parse_precision(str, ap);
 
 	return (1);
-	// if it's a converter, should I replace flags->conv ? Aka should I use the last conv ?
 }
 
-char		*convert(t_flags flags, va_list *ap)
+char		*convert(t_flags flags, va_list ap)
 {
 	if (flags.conv == 'c')
-		return (print_char(flags, ap));
+		return (print_char(ap));
 	else if (flags.conv == 's')
-		return (print_string(flags, ap));
-	else if (flags.conv == 'p')
-		return (print_pointer(flags, ap));
-	else if (flags.conv == 'd')
-		return (print_decimal(flags, ap));
-	else if (flags.conv == 'i')
-		return (print_integer(flags, ap));
-	else if (flags.conv == 'u')
-		return (print_uinteger(flags, ap));
-	else if (flags.conv == 'x')
-		return (print_uhexint(flags, ap));
-	else if (flags.conv == 'X')
-		return (print_uhexint_upcase(flags, ap));
-	else if (flags.conv == '%')
-		return (print_percent(flags, ap));
-	
+		return (print_string(ap));
+////else if (flags.conv == 'p')
+////	return (print_pointer(flags, ap));
+////else if (flags.conv == 'd')
+////	return (print_decimal(flags, ap));
+////else if (flags.conv == 'i')
+////	return (print_integer(flags, ap));
+////else if (flags.conv == 'u')
+////	return (print_uinteger(flags, ap));
+////else if (flags.conv == 'x')
+////	return (print_uhexint(flags, ap));
+////else if (flags.conv == 'X')
+////	return (print_uhexint_upcase(flags, ap));
+////else if (flags.conv == '%')
+////	return (print_percent(flags, ap));
+
+	printf("Unknow conv %c\n", flags.conv);	
 	return (NULL);  // What if no conv (or unknown) is provided ?
 }

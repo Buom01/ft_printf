@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2020/02/26 22:19:36 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/01 02:52:14 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
 	return (1);
 }
 
-static int	add_convert(char *str, va_list *ap, t_list **print_sgmt,
+static int	add_convert(char **str, va_list *ap, t_list **print_sgmt,
 		size_t *print_len)
 {
 	char	*content;
@@ -46,9 +46,9 @@ static int	add_convert(char *str, va_list *ap, t_list **print_sgmt,
 	t_flags	flags;
 
 	init_flags(&flags);
-	while (*str && parse_flag(&flags, &str, *str, ap))
-		str++;
-	if (!(content = convert(flags, ap)))
+	while (**str && parse_flag(&flags, str, **str, ap))
+		(*str)++;
+	if (!(content = convert(flags, *ap)))
 		return (0);
 	if (!(sgmt = ft_lstnew(content)))
 	{
@@ -77,7 +77,7 @@ int			ft_printf(const char *format, ...)
 	{
 		if (*formatcpy == '%' && ++formatcpy)
 		{
-			if (!add_convert(formatcpy, &ap, &print_sgmt, &print_len))
+			if (!add_convert(&formatcpy, &ap, &print_sgmt, &print_len))
 				return freeup(&print_sgmt, &ap);
 		}
 		else
