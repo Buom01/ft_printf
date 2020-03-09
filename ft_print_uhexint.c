@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 01:23:32 by badam             #+#    #+#             */
-/*   Updated: 2020/03/04 20:02:08 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/09 16:26:08 by badam            ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,7 +14,7 @@
 
 static char	*print_hexa(t_flags flags, unsigned int n, bool caps)
 {
-	return (pad_zero_free(tobase(n, caps, 16), flags.precision));
+	return (autopad_free(tobase(n, caps, 16), flags));
 }
 
 char		*print_uhexint(t_flags flags, va_list ap)
