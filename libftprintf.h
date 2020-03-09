@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:40:32 by badam             #+#    #+#             */
-/*   Updated: 2020/03/09 16:39:00 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/09 16:56:21 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_flags
 	size_t	zero_pad;
 	size_t	left_pad;
 	size_t	precision;
+	bool	explicit_precision;
 }				t_flags;
 
 int				ft_printf(const char *format, ...);

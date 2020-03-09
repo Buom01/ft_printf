@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/03/09 16:40:34 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/10 00:02:45 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,8 @@ static int	parse_precision(char **str, va_list *ap)
 
 char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 {
-	// if it's a converter, should I replace flags->conv ? Aka should I use the last conv ?
 	if (is_converter(c))
-		return (flags->conv = c);
-	if (flags->conv == '%')
-		return (0);
+		return (flags->conv = c) && (*str)++ && false;
 	if (!is_flag(c))
 		return (is_converter(c));
 	if (c == '-')
@@ -68,7 +65,10 @@ char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 	else if (c == '0')
 		flags->zero_pad = parse_pad(str);
 	else if (c == '.')
+	{
 		flags->precision = parse_precision(str, ap);
+		flags->explicit_precision = true;
+	}
 
 	return (1);
 }
@@ -81,8 +81,8 @@ char		*convert(t_flags flags, va_list ap)
 		return (print_string(ap));
 	else if (flags.conv == 'p')
 		return (print_pointer(ap));
-////else if (flags.conv == 'd')
-////	return (print_decimal(flags, ap));
+	else if (flags.conv == 'd')
+		return (print_integer(flags, ap));
 	else if (flags.conv == 'i')
 		return (print_integer(flags, ap));
 	else if (flags.conv == 'u')
@@ -91,9 +91,5 @@ char		*convert(t_flags flags, va_list ap)
 		return (print_uhexint(flags, ap));
 	else if (flags.conv == 'X')
 		return (print_uhexint_upcase(flags, ap));
-	else if (flags.conv == '%')
-		return (print_percent());
-
-	printf("Unknow conv %c\n", flags.conv);	
-	return (NULL);  // What if no conv (or unknown) is provided ?
+	return (print_percent());
 }

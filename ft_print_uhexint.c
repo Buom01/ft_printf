@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 01:23:32 by badam             #+#    #+#             */
-/*   Updated: 2020/03/09 16:26:08 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/09 23:53:41 by badam            ###   ########.fr       */
 /*                                                                            */
 /******************************************************************************/
 
@@ -14,6 +14,8 @@
 
 static char	*print_hexa(t_flags flags, unsigned int n, bool caps)
 {
+	if (!n && flags.explicit_precision)
+		return ft_strdup("");
 	return (autopad_free(tobase(n, caps, 16), flags));
 }
 

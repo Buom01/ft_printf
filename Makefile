@@ -6,7 +6,7 @@ DEPS=libft/libft.a
 HEADERS=libftprintf.h
 SRC=ft_printf.c ft_printf_utils.c ft_printf_parsing.c ft_print_utils.c \
 ft_print_char.c ft_print_string.c ft_print_pointer.c ft_print_uhexint.c \
-ft_print_percent.c
+ft_print_percent.c ft_print_integer.c ft_print_uinteger.c
 OBJ=$(SRC:.c=.o)
 SRC_BONUS=
 OBJ_BONUS=$(SRC_BONUS:.c=.o)
