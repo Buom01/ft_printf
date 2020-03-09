@@ -6,18 +6,26 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/03/04 20:14:01 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/09 16:40:34 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void		init_flags(t_flags *flags)
+static int	parse_pad(char **str)
 {
-	flags->conv = '\0';
-	flags->zero_pad = false;
-	flags->left = false;
-	flags->precision = 0;
+	int	n;
+
+	(*str)++;
+	n = 0;
+	while (ft_isdigit(**str))
+	{
+		n *= 10;
+		n += **str - '0';
+		(*str)++;
+	}
+	(*str)--;
+	return (n);
 }
 
 static int	parse_precision(char **str, va_list *ap)
@@ -56,9 +64,9 @@ char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 	if (!is_flag(c))
 		return (is_converter(c));
 	if (c == '-')
-		flags->left = !(flags->zero_pad = false);
+		flags->left_pad = parse_pad(str);
 	else if (c == '0')
-		flags->zero_pad = !flags->left;
+		flags->zero_pad = parse_pad(str);
 	else if (c == '.')
 		flags->precision = parse_precision(str, ap);
 
@@ -75,10 +83,10 @@ char		*convert(t_flags flags, va_list ap)
 		return (print_pointer(ap));
 ////else if (flags.conv == 'd')
 ////	return (print_decimal(flags, ap));
-////else if (flags.conv == 'i')
-////	return (print_integer(flags, ap));
-////else if (flags.conv == 'u')
-////	return (print_uinteger(flags, ap));
+	else if (flags.conv == 'i')
+		return (print_integer(flags, ap));
+	else if (flags.conv == 'u')
+		return (print_uinteger(flags, ap));
 	else if (flags.conv == 'x')
 		return (print_uhexint(flags, ap));
 	else if (flags.conv == 'X')
