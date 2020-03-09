@@ -14,13 +14,13 @@ OBJ_BONUS=$(SRC_BONUS:.c=.o)
 all: $(NAME) 
 
 $(NAME): $(DEPS) $(OBJ) $(HEADERS)
-	ar $(ARFLAGS) $(NAME) $(OBJ) ${DEPS}
+	ar $(ARFLAGS) $(NAME) $(OBJ) $(DEPS)
 
 libft/libft.a:
 	make -C libft bonus
 
 bonus: $(DEPS) $(OBJ) $(OBJ_BONUS) $(HEADERS)
-	ar $(ARFLAGS) $(NAME) $(OBJ) $(OBJ_BONUS) ${DEPS}
+	ar $(ARFLAGS) $(NAME) $(OBJ_BONUS) $(DEPS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
