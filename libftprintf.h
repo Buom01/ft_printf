@@ -6,14 +6,12 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:40:32 by badam             #+#    #+#             */
-/*   Updated: 2020/03/09 16:56:21 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/10 00:04:40 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFTPRINTF_H
 # define LIBFTPRINTF_H
-
-# include <stdio.h>
 
 # include <stdlib.h>
 # include <stdarg.h>
