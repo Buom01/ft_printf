@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/03/09 16:37:30 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/10 00:39:06 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ char	*autopad_free(char *str, t_flags flags)
 {
 	if (flags.precision)
 		str = (pad_free(str, flags.precision, '0', false));
+	if (flags.right_pad) // What about priority ?
+		str = (pad_free(str, flags.right_pad, ' ', false));
 	if (flags.left_pad)
 		str = (pad_free(str, flags.left_pad, ' ', true));
 	else if (flags.zero_pad)

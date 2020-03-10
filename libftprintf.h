@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:40:32 by badam             #+#    #+#             */
-/*   Updated: 2020/03/10 00:04:40 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/10 17:35:30 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ typedef struct	s_flags
 	char	conv;
 	size_t	zero_pad;
 	size_t	left_pad;
+	size_t	right_pad;
 	size_t	precision;
 	bool	explicit_precision;
 }				t_flags;
@@ -39,7 +40,6 @@ int				ft_printf(const char *format, ...);
 char			*print_char(va_list ap);
 char			*print_string(va_list ap);
 char			*print_pointer(va_list ap);
-//char			*print_decimal(t_flags flags, va_list ap);
 char			*print_integer(t_flags flags, va_list ap);
 char			*print_uinteger(t_flags flags, va_list ap);
 char			*print_uhexint(t_flags flags, va_list ap);
