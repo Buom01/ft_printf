@@ -1,2 +1,4 @@
 - unknow converter should show all expression and not just %
 - pad zero of negative number
+- malloc and freeup
+- norm
