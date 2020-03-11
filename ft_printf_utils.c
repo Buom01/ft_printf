@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 01:52:16 by badam             #+#    #+#             */
-/*   Updated: 2020/03/09 17:02:42 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 03:10:26 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ void	init_flags(t_flags *flags)
 	flags->conv = '\0';
 	flags->zero_pad = 0;
 	flags->left_pad = 0;
+	flags->right_pad = 0;
 	flags->precision = 0;
 	flags->explicit_precision = false;
 }
