@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 01:52:16 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 03:10:26 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 03:57:28 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	print(void *s)
 		return ;
 	len = ft_strlen((char*)s);
 	if (len)
-		write (1, (const void*)s, len);
+		write(1, (const void*)s, len);
 }
 
 char	is_converter(char c)
@@ -61,4 +61,3 @@ void	init_flags(t_flags *flags)
 	flags->precision = 0;
 	flags->explicit_precision = false;
 }
-

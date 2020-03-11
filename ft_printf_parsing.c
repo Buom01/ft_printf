@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 03:18:23 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 03:57:47 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 		flags->precision = parse_precision(str, ap);
 		flags->explicit_precision = true;
 	}
-
 	return (1);
 }
 

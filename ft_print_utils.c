@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 03:53:02 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 04:01:17 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,7 @@ char	*pad_free(char *str, size_t n, char blankchar, bool alignleft)
 	blanks[nblanks] = '\0';
 	while (nblanks--)
 		blanks[nblanks] = blankchar;
-	if (alignleft)
-		padded = ft_strjoin(str, blanks);
-	else
-		padded = ft_strjoin(blanks, str);
+	padded = alignleft ? ft_strjoin(str, blanks) : ft_strjoin(blanks, str);
 	free(blanks);
 	free(str);
 	return (padded);

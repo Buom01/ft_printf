@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 15:32:43 by badam             #+#    #+#             */
-/*   Updated: 2020/03/09 23:56:19 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 04:02:16 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,6 @@ char		*print_uinteger(t_flags flags, va_list ap)
 
 	n = va_arg(ap, unsigned int);
 	if (!n && flags.explicit_precision)
-		return ft_strdup("");
+		return (ft_strdup(""));
 	return (autopad_free(ft_uitoa(n), flags));
 }
