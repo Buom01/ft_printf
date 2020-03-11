@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 04:01:17 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 04:46:38 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,25 @@
 
 #define BUFFLEN 256
 
-char	*tobase(size_t n, bool caps, int basesize)
+static void	move_minus(char *str)
+{
+	size_t	minus;
+	size_t	firstzero;
+
+	minus = 0;
+	firstzero = 0;
+	while (str[minus] && str[minus] != '-')
+		minus++;
+	while (str[firstzero] && str[firstzero] != '0')
+		firstzero++;
+	if (str[minus] && str[firstzero] && firstzero < minus)
+	{
+		str[minus] = '0';
+		str[firstzero] = '-';
+	}
+}
+
+char		*tobase(size_t n, bool caps, int basesize)
 {
 	char	buff[BUFFLEN];
 	int		i;
@@ -39,7 +57,7 @@ char	*tobase(size_t n, bool caps, int basesize)
 	return (str);
 }
 
-char	*pad_free(char *str, size_t n, char blankchar, bool alignleft)
+char		*pad_free(char *str, size_t n, char blankchar, bool alignleft)
 {
 	size_t	len;
 	int		nblanks;
@@ -61,28 +79,35 @@ char	*pad_free(char *str, size_t n, char blankchar, bool alignleft)
 	while (nblanks--)
 		blanks[nblanks] = blankchar;
 	padded = alignleft ? ft_strjoin(str, blanks) : ft_strjoin(blanks, str);
-	free(blanks);
 	free(str);
+	free(blanks);
 	return (padded);
 }
 
-char	*autopad_free(char *str, t_flags flags)
+char		*autopad_free(char *str, t_flags flags)
 {
 	bool	number;
 
 	number = (flags.conv != 's');
 	if (number && flags.precision)
-		str = (pad_free(str, flags.precision, '0', false));
+		str = (pad_free(str, flags.precision + (*str == '-'), '0', false));
 	if (flags.right_pad)
 		str = (pad_free(str, flags.right_pad, ' ', false));
 	if (flags.left_pad)
 		str = (pad_free(str, flags.left_pad, ' ', true));
 	else if (flags.zero_pad)
-		str = (pad_free(str, flags.zero_pad, '0', false));
+	{
+		if (flags.explicit_precision)
+			str = (pad_free(str, flags.zero_pad, ' ', false));
+		else
+			str = (pad_free(str, flags.zero_pad, '0', false));
+	}
+	if (number)
+		move_minus(str);
 	return (str);
 }
 
-char	*autotrunc(char *str, t_flags flags)
+char		*autotrunc(char *str, t_flags flags)
 {
 	if (str && flags.explicit_precision && ft_strlen(str) > flags.precision)
 		str[flags.precision] = '\0';
