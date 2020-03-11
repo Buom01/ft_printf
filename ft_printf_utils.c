@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 01:52:16 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 03:57:28 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 05:15:27 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ void	print(void *s)
 
 	if (!s)
 		return ;
-	len = ft_strlen((char*)s);
-	if (len)
-		write(1, (const void*)s, len);
+	if (!(len = ft_strlen((char*)s)))
+		len++;
+	write(1, (const void*)s, len);
 }
 
 char	is_converter(char c)

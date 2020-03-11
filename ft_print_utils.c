@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 04:46:38 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 05:07:36 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char		*autopad_free(char *str, t_flags flags)
 {
 	bool	number;
 
-	number = (flags.conv != 's');
+	number = (flags.conv != 's' && flags.conv != 'p' && flags.conv != 'c');
 	if (number && flags.precision)
 		str = (pad_free(str, flags.precision + (*str == '-'), '0', false));
 	if (flags.right_pad)
