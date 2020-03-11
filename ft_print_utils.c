@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/03/10 00:39:06 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 03:53:02 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,23 @@ char	*pad_free(char *str, size_t n, char blankchar, bool alignleft)
 
 char	*autopad_free(char *str, t_flags flags)
 {
-	if (flags.precision)
+	bool	number;
+
+	number = (flags.conv != 's');
+	if (number && flags.precision)
 		str = (pad_free(str, flags.precision, '0', false));
-	if (flags.right_pad) // What about priority ?
+	if (flags.right_pad)
 		str = (pad_free(str, flags.right_pad, ' ', false));
 	if (flags.left_pad)
 		str = (pad_free(str, flags.left_pad, ' ', true));
 	else if (flags.zero_pad)
-		str = (pad_free(str, flags.zero_pad, flags.precision ? ' ' : '0', false));
+		str = (pad_free(str, flags.zero_pad, '0', false));
+	return (str);
+}
+
+char	*autotrunc(char *str, t_flags flags)
+{
+	if (str && flags.explicit_precision && ft_strlen(str) > flags.precision)
+		str[flags.precision] = '\0';
 	return (str);
 }
