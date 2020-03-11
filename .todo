@@ -1,4 +1,5 @@
 - unknow converter should show all expression and not just %
-- pad zero of negative number
+- put autopad to a higher level
+- use a pointer to flags (and not a copy which is created when passing to funcs)
 - malloc and freeup
 - norm
