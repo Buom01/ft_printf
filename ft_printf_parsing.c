@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/03/10 17:35:27 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 05:07:37 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	parse_pad(char **str)
 {
-	int	n;
+	size_t	n;
 
 	(*str)++;
 	n = 0;
@@ -60,27 +60,26 @@ char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 		return (is_converter(c));
 	if (c == '-')
 		flags->left_pad = parse_pad(str);
-	else if (ft_isdigit(c) && (*str)--)
-		flags->right_pad = parse_pad(str);
 	else if (c == '0')
 		flags->zero_pad = parse_pad(str);
+	else if (ft_isdigit(c) && (*str)--)
+		flags->right_pad = parse_pad(str);
 	else if (c == '.')
 	{
 		flags->precision = parse_precision(str, ap);
 		flags->explicit_precision = true;
 	}
-
 	return (1);
 }
 
 char		*convert(t_flags flags, va_list ap)
 {
 	if (flags.conv == 'c')
-		return (print_char(ap));
+		return (print_char(flags, ap));
 	else if (flags.conv == 's')
-		return (print_string(ap));
+		return (print_string(flags, ap));
 	else if (flags.conv == 'p')
-		return (print_pointer(ap));
+		return (print_pointer(flags, ap));
 	else if (flags.conv == 'd')
 		return (print_integer(flags, ap));
 	else if (flags.conv == 'i')
@@ -91,6 +90,5 @@ char		*convert(t_flags flags, va_list ap)
 		return (print_uhexint(flags, ap));
 	else if (flags.conv == 'X')
 		return (print_uhexint_upcase(flags, ap));
-	return ft_strdup("no conv");
-//	return (print_percent());
+	return (print_percent(flags));
 }

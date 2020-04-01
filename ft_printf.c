@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2020/03/01 02:52:14 by badam            ###   ########.fr       */
+/*   Updated: 2020/03/11 05:23:06 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,14 @@ static int	add_convert(char **str, va_list *ap, t_list **print_sgmt,
 		free(content);
 		return (0);
 	}
-	ft_lstadd_back(print_sgmt, sgmt);
-	*print_len += ft_strlen(content);
+	if (*content || flags.conv == 'c')
+	{
+		ft_lstadd_back(print_sgmt, sgmt);
+		if (*content)
+			*print_len += ft_strlen(content);
+		else
+			(*print_len)++;
+	}
 	return (1);
 }
 
@@ -78,11 +84,10 @@ int			ft_printf(const char *format, ...)
 		if (*formatcpy == '%' && ++formatcpy)
 		{
 			if (!add_convert(&formatcpy, &ap, &print_sgmt, &print_len))
-				return freeup(&print_sgmt, &ap);
+				return (freeup(&print_sgmt, &ap));
 		}
-		else
-			if (!add_string(&formatcpy, &print_sgmt, &print_len))
-				return freeup(&print_sgmt, &ap);
+		else if (!add_string(&formatcpy, &print_sgmt, &print_len))
+			return (freeup(&print_sgmt, &ap));
 	}
 	ft_lstiter(print_sgmt, &print);
 	freeup(&print_sgmt, &ap);

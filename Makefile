@@ -1,6 +1,5 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror
-ARFLAGS=rcsT
 NAME=libftprintf.a
 DEPS=libft/libft.a
 HEADERS=libftprintf.h
@@ -14,7 +13,7 @@ OBJ_BONUS=$(SRC_BONUS:.c=.o)
 all: $(NAME) 
 
 $(NAME): $(DEPS) $(OBJ) $(HEADERS)
-	ar $(ARFLAGS) $(NAME) $(OBJ) $(DEPS)
+	libtool -o $(NAME) $(OBJ) $(DEPS)
 
 libft/libft.a:
 	make -C libft bonus
