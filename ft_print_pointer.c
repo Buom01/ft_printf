@@ -6,27 +6,32 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 01:23:32 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 05:01:52 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/01 22:37:27 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-char		*print_pointer(t_flags flags, va_list ap)
+t_segment	print_pointer(t_flags flags, va_list ap)
 {
-	char	*sgmt;
-	char	*hex;
-	void	*pointer;
+	t_segment	sgmt;
+	char		*tmp;
+	void		*pointer;
 
 	pointer = va_arg(ap, void*);
 	if (!pointer && flags.explicit_precision)
-		hex = ft_strdup("");
+		sgmt.content = ft_strdup("");
 	else
-		hex = tobase((size_t)pointer, false, 16);
+		sgmt.content = tobase((size_t)pointer, false, 16);
+	sgmt.length = ft_strlen(sgmt.content);
 	if (flags.precision)
-		hex = (pad_free(hex, flags.precision, '0', false));
-	sgmt = autopad_free(ft_strjoin("0x", hex), flags);
-	if (hex)
-		free(hex);
+	{
+		sgmt = (pad_free(sgmt, flags.precision, '0', false));
+	}
+	tmp = sgmt.content;
+	sgmt.content = ft_strjoin("0x", tmp);
+	sgmt.length += 2;
+	free(tmp);
+	sgmt = autopad_free(sgmt, flags);
 	return (sgmt);
 }

@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 05:07:36 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/01 22:32:26 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,59 +57,64 @@ char		*tobase(size_t n, bool caps, int basesize)
 	return (str);
 }
 
-char		*pad_free(char *str, size_t n, char blankchar, bool alignleft)
+t_segment	pad_free(t_segment sgmt, size_t n, char blankchar, bool alignleft)
 {
-	size_t	len;
 	int		nblanks;
 	char	*blanks;
-	char	*padded;
+	char	*str;
 
-	if (!str)
-		return (NULL);
-	len = ft_strlen(str);
-	if (n <= len)
-		return (str);
-	nblanks = n - len;
+	str = sgmt.content;
+	if (!str || n <= sgmt.length)
+		return (sgmt);
+	nblanks = n - sgmt.length;
+	sgmt.length += nblanks;
 	if (!(blanks = malloc((nblanks + 1) * sizeof(char))))
 	{
-		free(str);
-		return (NULL);
+		free(sgmt.content);
+		sgmt.content = NULL;
+		return (sgmt);
 	}
 	blanks[nblanks] = '\0';
 	while (nblanks--)
 		blanks[nblanks] = blankchar;
-	padded = alignleft ? ft_strjoin(str, blanks) : ft_strjoin(blanks, str);
+	sgmt.content = alignleft ? ft_strjoin(str, blanks) : ft_strjoin(blanks, str);
 	free(str);
 	free(blanks);
-	return (padded);
+	return (sgmt);
 }
 
-char		*autopad_free(char *str, t_flags flags)
+t_segment	autopad_free(t_segment sgmt, t_flags flags)
 {
 	bool	number;
 
+	if (!(sgmt.content))
+		return (sgmt);
 	number = (flags.conv != 's' && flags.conv != 'p' && flags.conv != 'c');
 	if (number && flags.precision)
-		str = (pad_free(str, flags.precision + (*str == '-'), '0', false));
+		sgmt = (pad_free(sgmt, flags.precision + (*(sgmt.content) == '-'),
+				'0', false));
 	if (flags.right_pad)
-		str = (pad_free(str, flags.right_pad, ' ', false));
+		sgmt = (pad_free(sgmt, flags.right_pad, ' ', false));
 	if (flags.left_pad)
-		str = (pad_free(str, flags.left_pad, ' ', true));
+		sgmt = (pad_free(sgmt, flags.left_pad, ' ', true));
 	else if (flags.zero_pad)
 	{
 		if (flags.explicit_precision)
-			str = (pad_free(str, flags.zero_pad, ' ', false));
+			sgmt = (pad_free(sgmt, flags.zero_pad, ' ', false));
 		else
-			str = (pad_free(str, flags.zero_pad, '0', false));
+			sgmt = (pad_free(sgmt, flags.zero_pad, '0', false));
 	}
 	if (number)
-		move_minus(str);
-	return (str);
+		move_minus(sgmt.content);
+	return (sgmt);
 }
 
-char		*autotrunc(char *str, t_flags flags)
+t_segment	autotrunc(t_segment sgmt, t_flags flags)
 {
+	char	*str;
+
+	str = sgmt.content;
 	if (str && flags.explicit_precision && ft_strlen(str) > flags.precision)
 		str[flags.precision] = '\0';
-	return (str);
+	return (sgmt);
 }

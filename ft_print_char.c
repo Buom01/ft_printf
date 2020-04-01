@@ -6,19 +6,23 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 01:23:32 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 05:07:33 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/01 22:35:00 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-char		*print_char(t_flags flags, va_list ap)
+t_segment	print_char(t_flags flags, va_list ap)
 {
-	char	*sgmt;
+	t_segment	sgmt;
 
-	if (!(sgmt = malloc(2 * sizeof(char))))
-		return (NULL);
-	sgmt[0] = va_arg(ap, int);
-	sgmt[1] = '\0';
+	if (!(sgmt.content = malloc(2 * sizeof(char))))
+	{
+		sgmt.content = NULL;
+		return (sgmt);
+	}
+	sgmt.content[0] = va_arg(ap, int);
+	sgmt.content[1] = '\0';
+	sgmt.length = 1;
 	return (autopad_free(sgmt, flags));
 }

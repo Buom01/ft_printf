@@ -6,17 +6,20 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 01:23:32 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 04:04:37 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/01 17:55:36 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-char		*print_string(t_flags flags, va_list ap)
+t_segment		print_string(t_flags flags, va_list ap)
 {
-	char	*str;
+	char		*str;
+	t_segment	sgmt;
 
 	if (!(str = va_arg(ap, char*)))
 		str = "(null)";
-	return (autopad_free(autotrunc(ft_strdup(str), flags), flags));
+	sgmt.content = ft_strdup(str);
+	sgmt.length = ft_strlen(str);
+	return (autopad_free(autotrunc(sgmt, flags), flags));
 }

@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 01:52:16 by badam             #+#    #+#             */
-/*   Updated: 2020/04/01 16:31:23 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/01 22:27:37 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,19 @@
 
 int		freeup(t_list **print_sgmt, va_list *ap)
 {
-	ft_lstclear(print_sgmt, &free);
+	ft_lstclear(print_sgmt, &free_segment);
 	va_end(*ap);
 	return (0);
 }
 
-void	print(void *s)
+void	print(void *content)
 {
-	size_t	len;
+	t_segment	*sgmt;
 
-	if (!s)
+	sgmt = (t_segment*)content;
+	if (!(sgmt->content))
 		return ;
-	if (!(len = ft_strlen((char*)s)))
-		len++;
-	write(1, (const void*)s, len);
+	write(1, (const void*)(sgmt->content), sgmt->length);
 }
 
 char	is_converter(char c)

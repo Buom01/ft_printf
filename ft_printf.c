@@ -6,18 +6,19 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 05:23:06 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/01 22:24:12 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
+static int	add_string(char **str, t_list **print_lst, size_t *print_len)
 {
-	size_t	size;
-	char	*strcpy;
-	char	*content;
-	t_list	*sgmt;
+	size_t		size;
+	char		*strcpy;
+	char		*content;
+	t_list		*elem;
+	t_segment	*sgmt;
 
 	size = 0;
 	strcpy = *str;
@@ -27,12 +28,14 @@ static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
 		return (0);
 	ft_memcpy((void*)content, (void*)*str, size);
 	content[size] = '\0';
-	if (!(sgmt = ft_lstnew(content)))
+	if (!(sgmt = malloc_segment(content, size)) || !(elem = ft_lstnew(sgmt)))
 	{
+		if (sgmt)
+			free(sgmt);
 		free(content);
 		return (0);
 	}
-	ft_lstadd_back(print_sgmt, sgmt);
+	ft_lstadd_back(print_lst, elem);
 	*str += size;
 	*print_len += size;
 	return (1);
@@ -41,28 +44,26 @@ static int	add_string(char **str, t_list **print_sgmt, size_t *print_len)
 static int	add_convert(char **str, va_list *ap, t_list **print_sgmt,
 		size_t *print_len)
 {
-	char	*content;
-	t_list	*sgmt;
-	t_flags	flags;
+	t_segment	content;
+	t_list		*elem;
+	t_segment	*sgmt;
+	t_flags		flags;
 
 	init_flags(&flags);
 	while (**str && parse_flag(&flags, str, **str, ap))
 		(*str)++;
-	if (!(content = convert(flags, *ap)))
+	content = convert(flags, *ap);
+	if (!(content.content))
 		return (0);
-	if (!(sgmt = ft_lstnew(content)))
+	if (!(sgmt = dupli_segment(content)) || !(elem = ft_lstnew(sgmt)))
 	{
-		free(content);
+		if (sgmt)
+			free(sgmt);
+		free(content.content);
 		return (0);
 	}
-	if (*content || flags.conv == 'c')
-	{
-		ft_lstadd_back(print_sgmt, sgmt);
-		if (*content)
-			*print_len += ft_strlen(content);
-		else
-			(*print_len)++;
-	}
+	ft_lstadd_back(print_sgmt, elem);
+	*print_len += sgmt->length;
 	return (1);
 }
 
@@ -71,25 +72,25 @@ int			ft_printf(const char *format, ...)
 	va_list	ap;
 	char	*formatcpy;
 	size_t	print_len;
-	t_list	*print_sgmt;
+	t_list	*print_lst;
 
 	if (!format)
 		return (-1);
 	formatcpy = (char*)format;
 	print_len = 0;
-	print_sgmt = 0;
+	print_lst = 0;
 	va_start(ap, format);
 	while (*formatcpy)
 	{
 		if (*formatcpy == '%' && ++formatcpy)
 		{
-			if (!add_convert(&formatcpy, &ap, &print_sgmt, &print_len))
-				return (freeup(&print_sgmt, &ap));
+			if (!add_convert(&formatcpy, &ap, &print_lst, &print_len))
+				return (freeup(&print_lst, &ap));
 		}
-		else if (!add_string(&formatcpy, &print_sgmt, &print_len))
-			return (freeup(&print_sgmt, &ap));
+		else if (!add_string(&formatcpy, &print_lst, &print_len))
+			return (freeup(&print_lst, &ap));
 	}
-	ft_lstiter(print_sgmt, &print);
-	freeup(&print_sgmt, &ap);
+	ft_lstiter(print_lst, &print);
+	freeup(&print_lst, &ap);
 	return (print_len);
 }

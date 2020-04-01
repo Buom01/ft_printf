@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/09 15:32:43 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 04:39:40 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/01 22:40:20 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,21 @@ static char	*ft_uitoa(unsigned int n)
 	return (str);
 }
 
-char		*print_uinteger(t_flags flags, va_list ap)
+t_segment	print_uinteger(t_flags flags, va_list ap)
 {
-	int	n;
+	unsigned int	n;
+	t_segment		sgmt;
 
 	n = va_arg(ap, unsigned int);
 	if (!n && flags.explicit_precision)
-		return (autopad_free(ft_strdup(""), flags));
-	return (autopad_free(ft_uitoa(n), flags));
+	{
+		sgmt.content = ft_strdup("");
+		sgmt.length = 0;
+	}
+	else
+	{
+		sgmt.content = ft_uitoa(n);
+		sgmt.length = ft_strlen(sgmt.content);
+	}
+	return (autopad_free(sgmt, flags));
 }

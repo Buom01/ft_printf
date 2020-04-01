@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/03/11 05:07:37 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/01 21:01:16 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 	return (1);
 }
 
-char		*convert(t_flags flags, va_list ap)
+t_segment	convert(t_flags flags, va_list ap)
 {
 	if (flags.conv == 'c')
 		return (print_char(flags, ap));
