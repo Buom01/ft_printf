@@ -13,7 +13,7 @@ OBJ_BONUS=$(SRC_BONUS:.c=.o)
 all: $(NAME) 
 
 $(NAME): $(DEPS) $(OBJ) $(HEADERS)
-	libtool -o $(NAME) $(OBJ) $(DEPS)
+	libtool --mode=link gcc -o $(NAME) $(OBJ) $(DEPS)
 
 libft/libft.a:
 	make -C libft bonus
@@ -26,6 +26,7 @@ bonus: $(DEPS) $(OBJ) $(OBJ_BONUS) $(HEADERS)
 
 clean:
 	rm -rf $(OBJ)
+	make -C libft clean
 
 fclean:	clean	
 	rm -rf $(NAME)
