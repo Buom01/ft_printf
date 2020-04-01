@@ -10,16 +10,23 @@ OBJ=$(SRC:.c=.o)
 SRC_BONUS=
 OBJ_BONUS=$(SRC_BONUS:.c=.o)
 
+ifeq ($(shell uname),Linux)
+  CREATELIB=ar rcsT
+else
+  CREATELIB=libtool -o
+endif
+
+
 all: $(NAME) 
 
 $(NAME): $(DEPS) $(OBJ) $(HEADERS)
-	libtool --mode=link gcc -o $(NAME) $(OBJ) $(DEPS)
+	 $(CREATELIB) $(NAME) $(OBJ) $(DEPS)
 
 libft/libft.a:
 	make -C libft bonus
 
 bonus: $(DEPS) $(OBJ) $(OBJ_BONUS) $(HEADERS)
-	ar $(ARFLAGS) $(NAME) $(OBJ_BONUS) $(DEPS)
+	$(CREATELIB) $(LIBTOOLFLAGS) $(NAME) $(OBJ_BONUS) $(DEPS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
