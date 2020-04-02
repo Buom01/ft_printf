@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/04/01 22:32:26 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/02 18:03:28 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,27 +57,28 @@ char		*tobase(size_t n, bool caps, int basesize)
 	return (str);
 }
 
-t_segment	pad_free(t_segment sgmt, size_t n, char blankchar, bool alignleft)
+t_segment	pad_free(t_segment sgmt, int n, char blankchar, bool alignleft)
 {
-	int		nblanks;
+	size_t	nblanks;
+	size_t	nblankscpy;
 	char	*blanks;
 	char	*str;
 
 	str = sgmt.content;
-	if (!str || n <= sgmt.length)
+	if (!str || (size_t)n <= sgmt.length)
 		return (sgmt);
 	nblanks = n - sgmt.length;
-	sgmt.length += nblanks;
-	if (!(blanks = malloc((nblanks + 1) * sizeof(char))))
+	if (!(blanks = malloc(nblanks * sizeof(char))))
 	{
 		free(sgmt.content);
 		sgmt.content = NULL;
 		return (sgmt);
 	}
-	blanks[nblanks] = '\0';
-	while (nblanks--)
-		blanks[nblanks] = blankchar;
-	sgmt.content = alignleft ? ft_strjoin(str, blanks) : ft_strjoin(blanks, str);
+	nblankscpy = nblanks;
+	while (nblankscpy--)
+		blanks[nblankscpy] = blankchar;
+	sgmt = alignleft ? join_segment(str, sgmt.length, blanks, nblanks) :
+			join_segment(blanks, nblanks, str, sgmt.length);
 	free(str);
 	free(blanks);
 	return (sgmt);
@@ -86,7 +87,7 @@ t_segment	pad_free(t_segment sgmt, size_t n, char blankchar, bool alignleft)
 t_segment	autopad_free(t_segment sgmt, t_flags flags)
 {
 	bool	number;
-
+	
 	if (!(sgmt.content))
 		return (sgmt);
 	number = (flags.conv != 's' && flags.conv != 'p' && flags.conv != 'c');
@@ -114,7 +115,13 @@ t_segment	autotrunc(t_segment sgmt, t_flags flags)
 	char	*str;
 
 	str = sgmt.content;
-	if (str && flags.explicit_precision && ft_strlen(str) > flags.precision)
+	if (str && flags.explicit_precision &&
+			ft_strlen(str) > (size_t)flags.precision)
+	{
 		str[flags.precision] = '\0';
+		sgmt.content = ft_strdup(str);
+		sgmt.length = flags.precision;
+		free(str);
+	}
 	return (sgmt);
 }

@@ -6,18 +6,20 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/04/01 21:01:16 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/02 18:38:30 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-static int	parse_pad(char **str)
+static int	parse_pad(char **str, va_list *ap)
 {
-	size_t	n;
+	int	n;
 
 	(*str)++;
 	n = 0;
+	if (**str == '*')
+		return (va_arg(*ap, int));
 	while (ft_isdigit(**str))
 	{
 		n *= 10;
@@ -34,10 +36,7 @@ static int	parse_precision(char **str, va_list *ap)
 
 	(*str)++;
 	if (**str == '*')
-	{
-		(*str)++;
 		return (va_arg(*ap, int));
-	}
 	else
 	{
 		n = 0;
@@ -52,6 +51,29 @@ static int	parse_precision(char **str, va_list *ap)
 	}
 }
 
+void		repair_flags(t_flags *flags)
+{
+	if (flags->left_pad < 0)
+		flags->left_pad = -(flags->left_pad);
+	if (flags->right_pad < 0)
+	{
+		if (flags->left_pad < -(flags->right_pad))
+			flags->left_pad = -(flags->right_pad);
+		flags->right_pad = 0;
+	}
+	if (flags->zero_pad < 0)
+	{
+		if (!flags->left_pad)
+			flags->left_pad = -(flags->zero_pad);
+		flags->zero_pad = 0;
+	}
+	if (flags->precision < 0)
+	{
+		flags->precision = 0;
+		flags->explicit_precision = false;
+	}
+}
+
 char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 {
 	if (is_converter(c))
@@ -59,16 +81,18 @@ char		parse_flag(t_flags *flags, char **str, char c, va_list *ap)
 	if (!is_flag(c) && !ft_isdigit(c))
 		return (is_converter(c));
 	if (c == '-')
-		flags->left_pad = parse_pad(str);
+		flags->left_pad = parse_pad(str, ap);
 	else if (c == '0')
-		flags->zero_pad = parse_pad(str);
+		flags->zero_pad = parse_pad(str, ap);
 	else if (ft_isdigit(c) && (*str)--)
-		flags->right_pad = parse_pad(str);
+		flags->right_pad = parse_pad(str, ap);
 	else if (c == '.')
 	{
 		flags->precision = parse_precision(str, ap);
 		flags->explicit_precision = true;
 	}
+	else if (c == '*')
+		flags->right_pad = va_arg(*ap, int);
 	return (1);
 }
 
@@ -90,5 +114,5 @@ t_segment	convert(t_flags flags, va_list ap)
 		return (print_uhexint(flags, ap));
 	else if (flags.conv == 'X')
 		return (print_uhexint_upcase(flags, ap));
-	return (print_percent(flags));
+	return (print_percent());
 }

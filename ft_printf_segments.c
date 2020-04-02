@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 21:12:17 by badam             #+#    #+#             */
-/*   Updated: 2020/04/01 22:43:16 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/02 17:28:48 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,22 @@ t_segment	*dupli_segment(t_segment sgmt)
 	}
 	return (sgmtdup);
 }
+
+t_segment	join_segment(char *str, size_t len, char *str2, size_t len2)
+{
+	t_segment	sgmt;
+	char		*strdst;
+
+	sgmt.length = len + len2;
+	if (!(sgmt.content = malloc(sgmt.length * sizeof(char))))
+		return (sgmt);
+	strdst = sgmt.content;
+	while (len && len--)
+		*(strdst++) = *(str++);
+	while (len2 && len2--)
+		*(strdst++) = *(str2++);
+	return (sgmt);
+} 
 
 void		free_segment(void *content)
 {

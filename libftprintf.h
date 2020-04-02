@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:40:32 by badam             #+#    #+#             */
-/*   Updated: 2020/04/01 22:30:54 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/02 18:17:22 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 typedef struct	s_flags
 {
 	char	conv;
-	size_t	zero_pad;
-	size_t	left_pad;
-	size_t	right_pad;
-	size_t	precision;
+	int		zero_pad;
+	int		left_pad;
+	int		right_pad; // width
+	int		precision;
 	bool	explicit_precision;
 }				t_flags;
 
@@ -52,7 +52,7 @@ t_segment		print_integer(t_flags flags, va_list ap);
 t_segment		print_uinteger(t_flags flags, va_list ap);
 t_segment		print_uhexint(t_flags flags, va_list ap);
 t_segment		print_uhexint_upcase(t_flags flags, va_list ap);
-t_segment		print_percent(t_flags flags);
+t_segment		print_percent();
 
 int				freeup(t_list **print_sgmt, va_list *ap);
 void			print(void *content);
@@ -61,10 +61,11 @@ char			is_flag(char c);
 void			init_flags(t_flags *flags);
 
 char			parse_flag(t_flags *flags, char **str, char c, va_list *ap);
+void			repair_flags(t_flags *flags);
 t_segment		convert(t_flags flags, va_list ap);
 
 char			*tobase(size_t n, bool caps, int basesize);
-t_segment		pad_free(t_segment sgmt, size_t n, char blankchar,
+t_segment		pad_free(t_segment sgmt, int n, char blankchar,
 					bool alignleft);
 t_segment		autopad_free(t_segment sgmt, t_flags flags);
 t_segment		autotrunc(t_segment sgmt, t_flags flags);
@@ -72,6 +73,7 @@ t_segment		autotrunc(t_segment sgmt, t_flags flags);
 t_segment		*create_segment(void);
 t_segment		*malloc_segment(char *str, size_t len);
 t_segment		*dupli_segment(t_segment sgmt);
+t_segment		join_segment(char *str, size_t len, char *str2, size_t len2);
 void			free_segment(void *content);
 
 #endif

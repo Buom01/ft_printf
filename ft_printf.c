@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2020/04/01 22:24:12 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/02 18:16:56 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	add_convert(char **str, va_list *ap, t_list **print_sgmt,
 	init_flags(&flags);
 	while (**str && parse_flag(&flags, str, **str, ap))
 		(*str)++;
+	repair_flags(&flags);
 	content = convert(flags, *ap);
 	if (!(content.content))
 		return (0);
