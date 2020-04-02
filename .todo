@@ -4,3 +4,4 @@
 - padding of null char, should review how segments works
 - malloc and freeup
 - norm
+- remove all \0 and all +1 in mallocs
