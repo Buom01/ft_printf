@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/20 05:16:17 by badam             #+#    #+#             */
-/*   Updated: 2020/04/02 18:38:30 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/12 17:24:17 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,5 +114,5 @@ t_segment	convert(t_flags flags, va_list ap)
 		return (print_uhexint(flags, ap));
 	else if (flags.conv == 'X')
 		return (print_uhexint_upcase(flags, ap));
-	return (print_percent());
+	return (print_percent(flags));
 }

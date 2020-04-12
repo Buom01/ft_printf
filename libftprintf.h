@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:40:32 by badam             #+#    #+#             */
-/*   Updated: 2020/04/02 18:40:57 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/12 17:23:46 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_segment		print_integer(t_flags flags, va_list ap);
 t_segment		print_uinteger(t_flags flags, va_list ap);
 t_segment		print_uhexint(t_flags flags, va_list ap);
 t_segment		print_uhexint_upcase(t_flags flags, va_list ap);
-t_segment		print_percent();
+t_segment		print_percent(t_flags flags);
 
 int				freeup(t_list **print_sgmt, va_list *ap);
 void			print(void *content);
