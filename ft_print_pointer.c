@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 01:23:32 by badam             #+#    #+#             */
-/*   Updated: 2020/04/12 17:36:30 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/12 17:39:42 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_segment	print_pointer(t_flags flags, va_list ap)
 	void		*pointer;
 
 	pointer = va_arg(ap, void*);
-	if (pointer)
+	if (pointer || flags.right_pad)
 	{
 		sgmt.content = tobase((size_t)pointer, false, 16);
 		sgmt.length = ft_strlen(sgmt.content);
