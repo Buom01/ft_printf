@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/07 01:52:16 by badam             #+#    #+#             */
-/*   Updated: 2020/04/01 22:27:37 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/12 17:45:04 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,4 @@ char	is_flag(char c)
 		if (FLAGS[i++] == c)
 			return (1);
 	return (0);
-}
-
-void	init_flags(t_flags *flags)
-{
-	flags->conv = '\0';
-	flags->zero_pad = 0;
-	flags->left_pad = 0;
-	flags->right_pad = 0;
-	flags->precision = 0;
-	flags->explicit_precision = false;
 }

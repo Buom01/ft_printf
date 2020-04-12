@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:40:32 by badam             #+#    #+#             */
-/*   Updated: 2020/04/12 17:23:46 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/12 17:45:11 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int				freeup(t_list **print_sgmt, va_list *ap);
 void			print(void *content);
 char			is_converter(char c);
 char			is_flag(char c);
-void			init_flags(t_flags *flags);
 
 char			parse_flag(t_flags *flags, char **str, char c, va_list *ap);
 void			repair_flags(t_flags *flags);
