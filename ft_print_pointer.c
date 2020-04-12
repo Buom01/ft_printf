@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 01:23:32 by badam             #+#    #+#             */
-/*   Updated: 2020/04/12 17:33:49 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/12 17:36:30 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_segment	print_pointer(t_flags flags, va_list ap)
 	}
 	else
 	{
-		sgmt.content = ft_strdup("");
+		tmp = ft_strdup("");
 		sgmt.length = 0;
 	}
 	sgmt.content = ft_strjoin("0x", tmp);
