@@ -10,7 +10,7 @@ OBJ=$(SRC:.c=.o)
 SRC_BONUS=
 OBJ_BONUS=$(SRC_BONUS:.c=.o)
 
-ifeq ($(shell ar --version | tr "\n" " " | cut -d ' ' -f 1), GNU)
+ifeq ($(shell uname -s), Linux)
   CREATELIB=ar rcsT
 else
   CREATELIB=libtool -o
