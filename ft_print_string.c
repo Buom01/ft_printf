@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/01 01:23:32 by badam             #+#    #+#             */
-/*   Updated: 2020/04/12 17:16:10 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/12 17:29:49 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,5 @@ t_segment		print_string(t_flags flags, va_list ap)
 		str = "(null)";
 	sgmt.content = ft_strdup(str);
 	sgmt.length = ft_strlen(str);
-	if (flags.zero_pad)
-		flags.right_pad = flags.zero_pad;
 	return (autopad_free(autotrunc(sgmt, flags), flags));
 }
