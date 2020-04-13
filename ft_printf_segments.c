@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/01 21:12:17 by badam             #+#    #+#             */
-/*   Updated: 2020/04/02 17:28:48 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/13 16:43:59 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_segment	join_segment(char *str, size_t len, char *str2, size_t len2)
 	while (len2 && len2--)
 		*(strdst++) = *(str2++);
 	return (sgmt);
-} 
+}
 
 void		free_segment(void *content)
 {

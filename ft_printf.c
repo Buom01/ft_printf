@@ -6,7 +6,7 @@
 /*   By: badam <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 22:36:09 by badam             #+#    #+#             */
-/*   Updated: 2020/04/12 17:44:58 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/13 16:46:38 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ static int	add_string(char **str, t_list **print_lst, size_t *print_len)
 		return (0);
 	ft_memcpy((void*)content, (void*)*str, size);
 	content[size] = '\0';
-	if (!(sgmt = malloc_segment(content, size)) || !(elem = ft_lstnew(sgmt)))
+	sgmt = malloc_segment(content, size);
+	if (!sgmt || !(elem = ft_lstnew(sgmt)))
 	{
-		if (sgmt)
-			free(sgmt);
+		free(sgmt);
 		free(content);
 		return (0);
 	}
@@ -56,10 +56,10 @@ static int	add_convert(char **str, va_list *ap, t_list **print_sgmt,
 	content = convert(flags, *ap);
 	if (!(content.content))
 		return (0);
-	if (!(sgmt = dupli_segment(content)) || !(elem = ft_lstnew(sgmt)))
+	sgmt = dupli_segment(content);
+	if (!sgmt || !(elem = ft_lstnew(sgmt)))
 	{
-		if (sgmt)
-			free(sgmt);
+		free(sgmt);
 		free(content.content);
 		return (0);
 	}

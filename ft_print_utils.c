@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/04/02 18:03:28 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/13 16:42:54 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ t_segment	pad_free(t_segment sgmt, int n, char blankchar, bool alignleft)
 t_segment	autopad_free(t_segment sgmt, t_flags flags)
 {
 	bool	number;
-	
+
 	if (!(sgmt.content))
 		return (sgmt);
 	number = (flags.conv != 's' && flags.conv != 'p' && flags.conv != 'c');
