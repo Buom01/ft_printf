@@ -1,7 +1,0 @@
-- unknow converter should show all expression and not just %
-- put autopad to a higher level
-- use a pointer to flags (and not a copy which is created when passing to funcs)
-- padding of null char, should review how segments works
-- malloc and freeup
-- norm
-- remove all \0 and all +1 in mallocs
