@@ -6,7 +6,7 @@
 /*   By: badam <badam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/04 16:14:19 by badam             #+#    #+#             */
-/*   Updated: 2020/04/13 16:42:54 by badam            ###   ########.fr       */
+/*   Updated: 2020/04/17 20:47:55 by badam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,8 @@ t_segment	autopad_free(t_segment sgmt, t_flags flags)
 
 	if (!(sgmt.content))
 		return (sgmt);
-	number = (flags.conv != 's' && flags.conv != 'p' && flags.conv != 'c');
+	number = (flags.conv != 's' && flags.conv != 'p' && flags.conv != 'c'
+			&& flags.conv != '%');
 	if (number && flags.precision)
 		sgmt = (pad_free(sgmt, flags.precision + (*(sgmt.content) == '-'),
 				'0', false));
@@ -100,7 +101,7 @@ t_segment	autopad_free(t_segment sgmt, t_flags flags)
 		sgmt = (pad_free(sgmt, flags.left_pad, ' ', true));
 	else if (flags.zero_pad)
 	{
-		if (flags.explicit_precision)
+		if (flags.explicit_precision && flags.conv != '%')
 			sgmt = (pad_free(sgmt, flags.zero_pad, ' ', false));
 		else
 			sgmt = (pad_free(sgmt, flags.zero_pad, '0', false));
